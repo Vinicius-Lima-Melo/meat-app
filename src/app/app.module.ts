@@ -28,6 +28,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import { DeliveryCostsComponent } from './order/delivery-costs/delivery-costs.component';
 import { OrderSumaryComponent } from './order-sumary/order-sumary.component';
 import { SharedModule } from './shared/shared.module';
+import { NotFoundComponent } from './not-found/not-found.component';
+
+import { LocationStrategy, HashLocationStrategy} from '@angular/common'
 
 @NgModule({
   declarations: [
@@ -41,7 +44,8 @@ import { SharedModule } from './shared/shared.module';
     ShoppingCartComponent,
     MenuItemComponent,
     ReviewsComponent,
-    OrderSumaryComponent
+    OrderSumaryComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +59,7 @@ import { SharedModule } from './shared/shared.module';
   ],
   //providers: [RestaurantsService,ShoppingCartService, OrderService ,{provide: LOCALE_ID, useValue:'pt-BR'}],
   //os providers de servicos foram param o CoreModule
-  providers: [{provide: LOCALE_ID, useValue:'pt-BR'}],
+  providers: [ {provide: LocationStrategy, useClass: HashLocationStrategy} ,{provide: LOCALE_ID, useValue:'pt-BR'}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

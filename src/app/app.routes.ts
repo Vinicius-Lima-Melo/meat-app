@@ -1,3 +1,4 @@
+import { NotFoundComponent } from './not-found/not-found.component';
 import { AboutModule } from './about/about.module';
 import {Routes} from '@angular/router'
 // import { AboutComponent } from './about/about.component'
@@ -23,5 +24,5 @@ export const ROUTES: Routes = [
         ]
     },
     {path: 'order-sumary', component:  OrderSumaryComponent},
-
+    {path: '**', component: NotFoundComponent}
 ]
