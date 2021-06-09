@@ -2,7 +2,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, LOCALE_ID } from '@angular/core';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { PreloadAllModules, RouterModule } from '@angular/router';
 
 
@@ -50,7 +50,7 @@ import { LocationStrategy, HashLocationStrategy} from '@angular/common'
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    HttpModule,
+    HttpClientModule,
     FormsModule,
     SharedModule.forRoot(),
     //CoreModule, os providers estao no sharedModule.forRoot e da pra importar o sharedModule mais o metodo forRoot = providers
