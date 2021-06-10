@@ -11,11 +11,15 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { MEAT_API } from "app/app.api";
 import 'rxjs/operator/do';
-import { Router } from "@angular/router";
+import 'rxjs/add/operator/filter';
+import { NavigationEnd, Router } from "@angular/router";
 var LoginService = (function () {
     function LoginService(http, router) {
+        var _this = this;
         this.http = http;
         this.router = router;
+        this.router.events.filter(function (e) { return e instanceof NavigationEnd; })
+            .subscribe(function (e) { return _this.lastUrl = e.url; });
     }
     LoginService.prototype.isLoogedIn = function () {
         return this.user !== undefined;
@@ -25,7 +29,11 @@ var LoginService = (function () {
         return this.http.post(MEAT_API + "/login", { email: email, password: password })
             .do(function (user) { return _this.user = user; });
     };
+    LoginService.prototype.logout = function () {
+        this.user = undefined;
+    };
     LoginService.prototype.handleLogin = function (path) {
+        if (path === void 0) { path = this.lastUrl; }
         this.router.navigate(['/login', btoa(path)]);
     };
     LoginService = __decorate([
