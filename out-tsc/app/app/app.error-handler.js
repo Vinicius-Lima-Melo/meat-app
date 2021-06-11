@@ -21,7 +21,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorHandler, Injectable, Injector, NgZone } from '@angular/core';
 import { LoginService } from './security/login/login.service';
 import { NotificationService } from './shared/messages/notification.service';
-var AplicationErrorHandler = (function (_super) {
+var AplicationErrorHandler = /** @class */ (function (_super) {
     __extends(AplicationErrorHandler, _super);
     function AplicationErrorHandler(ns, injector, zone) {
         var _this = _super.call(this) || this;

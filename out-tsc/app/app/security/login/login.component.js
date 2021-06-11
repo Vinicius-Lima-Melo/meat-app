@@ -12,7 +12,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from 'app/shared/messages/notification.service';
 import { LoginService } from './login.service';
-var LoginComponent = (function () {
+var LoginComponent = /** @class */ (function () {
     function LoginComponent(fb, loginService, notificationService, activatedRoute, router) {
         this.fb = fb;
         this.loginService = loginService;

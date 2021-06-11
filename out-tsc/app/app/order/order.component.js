@@ -13,7 +13,7 @@ import { OrderItem } from './order.model';
 import { OrderService } from './order.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import 'rxjs/add/operator/do';
-var OrderComponent = (function () {
+var OrderComponent = /** @class */ (function () {
     function OrderComponent(orderService, router, formBuilder) {
         this.orderService = orderService;
         this.router = router;

@@ -20,7 +20,7 @@ import { LoogedinGuard } from 'app/security/login/loogedin.guard';
 import { LeaveOrderGuard } from 'app/order/leave-order.guard';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from 'app/security/auth.interceptor';
-var SharedModule = (function () {
+var SharedModule = /** @class */ (function () {
     function SharedModule() {
     }
     SharedModule_1 = SharedModule;

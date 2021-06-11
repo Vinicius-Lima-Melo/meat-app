@@ -12,7 +12,7 @@ import { ShoppingCartService } from "../restaurant-detail/shopping-cart/shopping
 import 'rxjs/add/operator/map';
 import { HttpClient } from "@angular/common/http";
 import { MEAT_API } from "../app.api";
-var OrderService = (function () {
+var OrderService = /** @class */ (function () {
     function OrderService(cartService, http) {
         this.cartService = cartService;
         this.http = http;

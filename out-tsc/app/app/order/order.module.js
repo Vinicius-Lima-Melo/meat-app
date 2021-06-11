@@ -14,7 +14,7 @@ import { LeaveOrderGuard } from './leave-order.guard';
 var ROUTES = [
     { path: '', component: OrderComponent, canDeactivate: [LeaveOrderGuard] }
 ];
-var OrderModule = (function () {
+var OrderModule = /** @class */ (function () {
     function OrderModule() {
     }
     OrderModule = __decorate([

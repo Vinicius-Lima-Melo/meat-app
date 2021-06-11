@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Injectable, Injector } from "@angular/core";
 import { LoginService } from "./login/login.service";
-var AuthInterceptor = (function () {
+var AuthInterceptor = /** @class */ (function () {
     function AuthInterceptor(injector) {
         this.injector = injector;
     }

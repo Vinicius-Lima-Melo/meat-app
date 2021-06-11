@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component, forwardRef, Input } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-var RadioComponent = (function () {
+var RadioComponent = /** @class */ (function () {
     function RadioComponent() {
     }
     RadioComponent_1 = RadioComponent;

@@ -13,7 +13,7 @@ import { MEAT_API } from "app/app.api";
 import 'rxjs/operator/do';
 import 'rxjs/add/operator/filter';
 import { NavigationEnd, Router } from "@angular/router";
-var LoginService = (function () {
+var LoginService = /** @class */ (function () {
     function LoginService(http, router) {
         var _this = this;
         this.http = http;
