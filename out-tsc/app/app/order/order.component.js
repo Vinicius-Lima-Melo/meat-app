@@ -11,8 +11,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { OrderItem } from './order.model';
 import { OrderService } from './order.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import 'rxjs/add/operator/do';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { tap } from 'rxjs/operators';
 var OrderComponent = /** @class */ (function () {
     function OrderComponent(orderService, router, formBuilder) {
         this.orderService = orderService;
@@ -29,15 +29,18 @@ var OrderComponent = /** @class */ (function () {
     }
     OrderComponent_1 = OrderComponent;
     OrderComponent.prototype.ngOnInit = function () {
-        this.orderForm = this.formBuilder.group({
-            name: this.formBuilder.control('', [Validators.required, Validators.minLength(5)]),
+        this.orderForm = new FormGroup({
+            name: new FormControl('', {
+                validators: [Validators.required, Validators.minLength(5)],
+                updateOn: 'blur'
+            }),
             email: this.formBuilder.control('', [Validators.required, Validators.pattern(this.emailPattern)]),
             emailConfirmation: this.formBuilder.control('', [Validators.required, Validators.pattern(this.emailPattern)]),
             address: this.formBuilder.control('', [Validators.required, Validators.minLength(5)]),
             number: this.formBuilder.control('', [Validators.required, Validators.pattern(this.numberPattern)]),
             optionalAddress: this.formBuilder.control(''),
             paymentOption: this.formBuilder.control('', [Validators.required])
-        }, { validator: OrderComponent_1.equalsTo });
+        }, { validators: [OrderComponent_1.equalsTo], updateOn: 'blur' });
     };
     OrderComponent.equalsTo = function (group) {
         var email = group.get('email');
@@ -70,9 +73,9 @@ var OrderComponent = /** @class */ (function () {
         order.orderItems = this.cartItems()
             .map(function (item) { return new OrderItem(item.quantity, item.menuItem.id); });
         this.orderService.checkOrder(order)
-            .do(function (orderId) {
+            .pipe(tap(function (orderId) {
             _this.orderId = orderId;
-        })
+        }))
             .subscribe(function (orderId) {
             _this.router.navigate(['/order-sumary']);
             // console.log(`Compra concluída: ${orderId}`);

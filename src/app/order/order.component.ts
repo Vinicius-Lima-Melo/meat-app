@@ -4,9 +4,8 @@ import { CartItem } from '../restaurant-detail/shopping-cart/item-cart.model';
 import { RadioOption } from '../shared/radio/radio-option.model';
 import { Order, OrderItem } from './order.model';
 import { OrderService } from './order.service';
-import {FormGroup, FormBuilder, Validators, AbstractControl} from '@angular/forms'
-import 'rxjs/add/operator/do'
-
+import {FormGroup, FormBuilder, Validators, AbstractControl, FormControl} from '@angular/forms'
+import {tap } from 'rxjs/operators'
 @Component({
   selector: 'mt-order',
   templateUrl: './order.component.html'
@@ -32,15 +31,18 @@ export class OrderComponent implements OnInit {
               private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    this.orderForm = this.formBuilder.group({
-      name: this.formBuilder.control('', [Validators.required, Validators.minLength(5)]),  //or: name: ''
+    this.orderForm = new FormGroup({
+      name: new FormControl('', {
+       validators:  [Validators.required, Validators.minLength(5)],
+       updateOn: 'blur'
+      }),  //or: name: ''
       email: this.formBuilder.control('', [Validators.required, Validators.pattern(this.emailPattern)]),
       emailConfirmation: this.formBuilder.control('', [Validators.required, Validators.pattern(this.emailPattern)]),
       address: this.formBuilder.control('', [Validators.required, Validators.minLength(5)]),
       number: this.formBuilder.control('', [Validators.required, Validators.pattern(this.numberPattern)]),
       optionalAddress: this.formBuilder.control(''),
       paymentOption: this.formBuilder.control('', [Validators.required])
-    }, {validator: OrderComponent.equalsTo})
+    }, {validators: [OrderComponent.equalsTo], updateOn: 'blur'})
   }
 
   static equalsTo(group: AbstractControl):{[key: string]:boolean}{
@@ -82,9 +84,12 @@ export class OrderComponent implements OnInit {
     order.orderItems = this.cartItems()
     .map((item:CartItem) => new OrderItem(item.quantity, item.menuItem.id))
     this.orderService.checkOrder(order)
-    .do((orderId:string)=>{
-      this.orderId = orderId;
-    })
+    .pipe(
+      tap((orderId:string)=>{
+        this.orderId = orderId;
+      })
+    )
+    
     .subscribe((orderId:string) =>{
       this.router.navigate(['/order-sumary'])
       // console.log(`Compra concluída: ${orderId}`);

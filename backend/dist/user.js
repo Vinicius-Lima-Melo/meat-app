@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-var User = (function () {
+var User = /** @class */ (function () {
     function User(email, name, password) {
         this.email = email;
         this.name = name;
@@ -14,5 +14,5 @@ var User = (function () {
 exports.User = User;
 exports.users = {
     "viniciuslima@gmail.com": new User('viniciuslima@gmail.com', 'vinicius', '123'),
-    "teste@gmail.com": new User('teste@gmail.com', 'teste', 'teste')
+    "t@t": new User('t@t', 'Usuario', 't')
 };

@@ -11,13 +11,8 @@ import { Component } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { RestaurantsService } from './restaurants.service';
 import { FormBuilder } from '@angular/forms';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/from';
-import { Observable } from 'rxjs/Observable';
+import { from } from 'rxjs';
+import { switchMap, debounceTime, distinctUntilChanged, catchError } from 'rxjs/operators';
 var RestaurantsComponent = /** @class */ (function () {
     function RestaurantsComponent(restaurantServices, fb) {
         this.restaurantServices = restaurantServices;
@@ -32,13 +27,12 @@ var RestaurantsComponent = /** @class */ (function () {
             searchControl: this.searchControl
         });
         this.searchControl.valueChanges
-            .debounceTime(500) // executa o subscribe a cada 500ms
-            .distinctUntilChanged() //se for igual a ultima busca ele pega ela e nao requisita
-            .switchMap(function (searchTerm) {
+            .pipe(debounceTime(500), // executa o subscribe a cada 500ms
+        distinctUntilChanged(), //se for igual a ultima busca ele pega ela e nao requisita
+        switchMap(function (searchTerm) {
             return _this.restaurantServices.restaurants(searchTerm)
-                .catch(function (error) { return Observable.from([]); });
-        })
-            .subscribe(function (restaurants) { return _this.restaurants = restaurants; });
+                .pipe(catchError(function (error) { return from([]); }));
+        })).subscribe(function (restaurants) { return _this.restaurants = restaurants; });
     };
     RestaurantsComponent.prototype.toggleSearch = function () {
         this.searchBarState = this.searchBarState === 'hidden' ? 'visible' : 'hidden';

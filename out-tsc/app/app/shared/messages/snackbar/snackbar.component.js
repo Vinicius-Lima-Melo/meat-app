@@ -7,13 +7,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Observable } from 'rxjs/Observable';
+import { timer } from 'rxjs';
 import { NotificationService } from './../notification.service';
 import { Component } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import 'rxjs/add/observable/timer';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/switchMap';
+import { tap, switchMap } from 'rxjs/operators';
 var SnackbarComponent = /** @class */ (function () {
     function SnackbarComponent(notificationService) {
         this.notificationService = notificationService;
@@ -23,12 +21,11 @@ var SnackbarComponent = /** @class */ (function () {
     SnackbarComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.notificationService.notifier
-            .do(function (message) {
+            .pipe(tap(function (message) {
             _this.message = message,
                 _this.snackVisibility = 'visible';
-        })
-            .switchMap(function (message) { return Observable.timer(3000); }) //se tiver dois ou mais subscribes ele da unsubscribe no antigo e faz um novo
-            .subscribe(function (timer) { return _this.snackVisibility = 'hidden'; });
+        }), switchMap(function (message) { return timer(3000); }) //se tiver dois ou mais subscribes ele da unsubscribe no antigo e faz um novo
+        ).subscribe(function (timer) { return _this.snackVisibility = 'hidden'; });
     };
     SnackbarComponent = __decorate([
         Component({
