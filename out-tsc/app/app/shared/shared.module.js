@@ -17,6 +17,9 @@ import { RatingComponent } from "./rating/rating.component";
 import { SnackbarComponent } from './messages/snackbar/snackbar.component';
 import { LoginService } from 'app/security/login/login.service';
 import { LoogedinGuard } from 'app/security/login/loogedin.guard';
+import { LeaveOrderGuard } from 'app/order/leave-order.guard';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from 'app/security/auth.interceptor';
 var SharedModule = (function () {
     function SharedModule() {
     }
@@ -29,7 +32,10 @@ var SharedModule = (function () {
                 OrderService,
                 NotificationService,
                 LoginService,
-                LoogedinGuard]
+                LoogedinGuard,
+                LeaveOrderGuard,
+                { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+            ]
         };
     };
     SharedModule = SharedModule_1 = __decorate([

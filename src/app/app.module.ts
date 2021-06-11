@@ -1,7 +1,7 @@
 // import { CoreModule } from './core/core.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { NgModule, LOCALE_ID, ErrorHandler } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { PreloadAllModules, RouterModule } from '@angular/router';
 
@@ -33,6 +33,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { LocationStrategy, HashLocationStrategy} from '@angular/common';
 import { LoginComponent } from './security/login/login.component';
 import { UserDetailComponent } from './header/user-detail/user-detail.component'
+import { AplicationErrorHandler } from './app.error-handler';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,11 @@ import { UserDetailComponent } from './header/user-detail/user-detail.component'
   ],
   //providers: [RestaurantsService,ShoppingCartService, OrderService ,{provide: LOCALE_ID, useValue:'pt-BR'}],
   //os providers de servicos foram param o CoreModule
-  providers: [ {provide: LocationStrategy, useClass: HashLocationStrategy} ,{provide: LOCALE_ID, useValue:'pt-BR'}],
+  providers: [ 
+              {provide: LocationStrategy, useClass: HashLocationStrategy} ,
+              {provide: LOCALE_ID, useValue:'pt-BR'},
+              {provide: ErrorHandler, useClass: AplicationErrorHandler}
+            ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
